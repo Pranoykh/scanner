@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Vulnerability Scanner",
+			"type": "shell",
+			"command": "D:/project/scanner/.venv/Scripts/python.exe",
+			"args": [
+				"scanner.py",
+				"--url",
+				"https://example.com"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		},
+		{
+			"label": "Run Flask Web App",
+			"type": "shell",
+			"command": "D:/project/scanner/.venv/Scripts/python.exe",
+			"args": [
+				"app.py"
+			],
+			"problemMatcher": [],
+			"group": "test"
+		}
+	]
+}

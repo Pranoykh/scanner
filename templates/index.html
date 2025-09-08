@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Vulnerability Scanner</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Web Application Vulnerability Scanner</h1>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+      {{ form.url.label(class="form-label") }}
+      {{ form.url(class="form-control", placeholder="https://example.com") }}
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mt-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  {% if result %}
+  <div class="mt-4">
+    <h3>Scan Results</h3>
+    <pre>{{ result }}</pre>
+    {% if logs and logs|length > 0 %}
+    <h4 class="mt-4">Vulnerability Log</h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>URL</th>
+          <th>Evidence</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for entry in logs %}
+        <tr>
+          <td>{{ entry.type }}</td>
+          <td>{{ entry.url }}</td>
+          <td><code>{{ entry.evidence }}</code></td>
+          <td>{{ entry.severity }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    <h4 class="mt-4">OWASP Top 10 Checklist</h4>
+    <ul>
+    {% for item in owasp_checklist %}
+      <li>{{ item }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
